@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceByte | Habit Tracker</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6ab04c; --secondary: #4834d4; --bg: #f9fbfd;
+            --card: #ffffff; --text: #2d3436; --light-text: #636e72;
+        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .container { max-width: 450px; margin: 0 auto; }
+        .card { 
+            background: var(--card); border-radius: 20px; padding: 25px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px;
+        }
+        .hidden { display: none; }
+        button { 
+            width: 100%; padding: 15px; border: none; border-radius: 12px; 
+            background: var(--primary); color: white; font-weight: bold; 
+            cursor: pointer; margin-top: 10px;
+        }
+        .step-indicator { color: var(--secondary); font-weight: bold; font-size: 0.8rem; margin-bottom: 10px; display: block; }
+        .recovery-card { border-left: 5px solid var(--secondary); background: #f0f3ff; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        .score-val { font-size: 2.5rem; font-weight: bold; color: var(--primary); text-align: center; display: block; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <section id="postMealPage">
+        <div class="card">
+            <span class="step-indicator">STEP 5: POST-MEAL FEEDBACK</span>
+            <h3>How do you feel?</h3>
+            <p style="font-size: 0.9rem;">Reflecting on your energy helps build awareness.</p>
+            <button onclick="goToCorrection('energized')" style="background:#27ae60">Energized ⚡</button>
+            <button onclick="goToCorrection('tired')" style="background:#f39c12">A bit tired 🥱</button>
+        </div>
+    </section>
+
+    <section id="correctionPage" class="hidden">
+        <div class="card">
+            <span class="step-indicator">STEP 6: SMART CORRECTION</span>
+            <h3>Your Recovery Plan</h3>
+            <p id="correctionIntro"></p>
+            
+            <div class="recovery-card">
+                <strong><i class="fas fa-utensils"></i> Next Meal:</strong>
+                <p style="margin: 5px 0; font-size: 0.85rem;">Opt for a lighter "Greens-first" meal to balance your digestion.</p>
+            </div>
+            <div class="recovery-card">
+                <strong><i class="fas fa-walking"></i> Movement:</strong>
+                <p style="margin: 5px 0; font-size: 0.85rem;">Try 10-15 minutes of light stretching or a brisk walk.</p>
+            </div>
+            <div class="recovery-card">
+                <strong><i class="fas fa-glass-water"></i> Hydration:</strong>
+                <p style="margin: 5px 0; font-size: 0.85rem;">Reminder: Drink 2 glasses of water in the next hour.</p>
+            </div>
+
+            <button onclick="calculateHabitScore()">View Final Habit Score</button>
+        </div>
+    </section>
+
+    <section id="habitScorePage" class="hidden">
+        <div class="card" style="text-align: center;">
+            <span class="step-indicator">STEP 7: FINAL SCORECARD</span>
+            <h3>Habit Consistency</h3>
+            <div style="margin: 20px 0;">
+                <span id="habitScoreDisplay" class="score-val">0%</span>
+                <p style="color: var(--light-text); font-size: 0.9rem;">Your Habit Score</p>
+            </div>
+            <p id="habitFeedback" style="font-size: 0.85rem; line-height: 1.4;"></p>
+            <button onclick="location.reload()" style="background: var(--secondary);">Restart Day</button>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Dummy Data for Logic
+    let totalMeals = 5;
+    let balancedMeals = 3; 
+
+    function goToCorrection(feeling) {
+        document.getElementById('postMealPage').classList.add('hidden');
+        document.getElementById('correctionPage').classList.remove('hidden');
+        
+        const intro = document.getElementById('correctionIntro');
+        if(feeling === 'tired') {
+            intro.innerText = "It's okay! Your body is processing a heavy load. Let's reset with these steps:";
+        } else {
+            intro.innerText = "You're feeling great! Let's maintain that momentum with these habits:";
+            balancedMeals++; // Simulating a balanced choice increase
+        }
+    }
+
+    function calculateHabitScore() {
+        // INNOVATION LOGIC: Balanced / Total
+        const score = Math.round((balancedMeals / totalMeals) * 100);
+        
+        document.getElementById('correctionPage').classList.add('hidden');
+        document.getElementById('habitScorePage').classList.remove('hidden');
+        
+        document.getElementById('habitScoreDisplay').innerText = score + "%";
+        
+        const feedback = document.getElementById('habitFeedback');
+        if(score >= 80) {
+            feedback.innerText = "Excellent consistency! You are building sustainable habits that your future self will thank you for.";
+        } else if (score >= 50) {
+            feedback.innerText = "Good progress. You're balancing most of your meals. Focus on one small improvement tomorrow!";
+        } else {
+            feedback.innerText = "Every journey starts with awareness. Use the recovery tips to increase your score tomorrow!";
+        }
+    }
+</script>
+</body>
+</html>

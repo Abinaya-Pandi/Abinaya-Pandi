@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceByte | Wellness Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">🌿 BalanceByte</div>
+    </nav>
+
+    <main id="app-container">
+        <section id="view-login" class="view">
+            <div class="card">
+                <h2>Welcome to BalanceByte</h2>
+                <p>Your details help us understand your nutritional balance better.</p>
+                <input type="text" id="username" placeholder="Username">
+                <input type="number" id="height" placeholder="Height (cm)">
+                <input type="number" id="weight" placeholder="Weight (kg)">
+                <button onclick="navigateTo('view-input')">Start My Journey</button>
+            </div>
+        </section>
+
+        <section id="view-input" class="view" style="display:none;">
+            <div class="card">
+                <h2>Plan Your Meal</h2>
+                <label>Meal Type</label>
+                <select id="meal-type">
+                    <option value="pre-workout">Pre-Workout</option>
+                    <option value="meal">Regular Meal</option>
+                </select>
+
+                <div class="food-grid">
+                    <div class="food-item">
+                        <input type="checkbox" id="check-carbs"> 🍞 Carbs
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="check-protein"> 🍗 Protein
+                    </div>
+                    <div class="food-item">
+                        <input type="checkbox" id="check-veg"> 🥗 Veg/Fruit
+                    </div>
+                </div>
+
+                <label>Hydration (Glasses of water)</label>
+                <input type="number" id="water-intake" value="0">
+                
+                <button class="btn-analyze" onclick="analyzeMeal()">Analyze Balance</button>
+            </div>
+        </section>
+
+        <section id="view-analysis" class="view" style="display:none;">
+            <div class="card" id="result-card">
+                <div id="status-icon"></div>
+                <h2 id="result-text">Checking...</h2>
+                <p id="result-desc"></p>
+                <div id="suggestions" class="suggestion-box"></div>
+                <button onclick="navigateTo('view-post-meal')">Next: Log Post-Meal Feeling</button>
+                <button class="btn-secondary" onclick="navigateTo('view-input')">Adjust Plan</button>
+            </div>
+        </section>
+
+        <section id="view-post-meal" class="view" style="display:none;">
+            <div class="card">
+                <h2>Post-Meal Check-in</h2>
+                <p>How do you feel after eating?</p>
+                
+                <label>Actually ate:</label>
+                <textarea id="actual-food" placeholder="e.g., Chicken salad, apple, water" style="width: 100%; height: 60px; border-radius: 10px; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"></textarea>
+
+                <label>Energy Level</label>
+                <select id="post-feeling">
+                    <option value="energized">⚡ Energized & Focused</option>
+                    <option value="neutral">😐 Neutral / Okay</option>
+                    <option value="tired">😴 Tired / Sluggish</option>
+                </select>
+
+                <button onclick="processPostMeal()">Submit Check-in</button>
+                <button class="btn-secondary" onclick="navigateTo('view-dashboard')">Skip to Dashboard</button>
+            </div>
+        </section>
+
+        <section id="view-dashboard" class="view" style="display:none;">
+            <div class="card">
+                <h2>Your Wellness Scorecard</h2>
+                <div class="score-grid">
+                    <div class="score-card">
+                        <h4>Meal Balance</h4>
+                        <div class="progress-bar"><div id="bar-meal" style="width: 0%"></div></div>
+                    </div>
+                    <div class="score-card" style="margin-top: 20px;">
+                        <h4>Hydration</h4>
+                        <div class="progress-bar"><div id="bar-water" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <div class="quote-box" style="margin-top: 20px; font-style: italic; color: #666;">
+                    <p id="daily-quote">"Health is a journey, not a destination."</p>
+                </div>
+                <button style="margin-top: 20px;" onclick="navigateTo('view-innovation')">How it works</button>
+                <button class="btn-secondary" onclick="location.reload()">Reset App</button>
+            </div>
+        </section>
+
+        <section id="view-innovation" class="view" style="display:none;">
+            <div class="card">
+                <h2>Innovation & Impact</h2>
+                <p>BalanceByte is a <strong>preventive wellness tool</strong> designed to build habits through awareness.</p>
+                <ul class="impact-list" style="text-align: left; line-height: 1.8;">
+                    <li>💡 <strong>Awareness:</strong> Visualizing missing nutrients.</li>
+                    <li>🌱 <strong>Habits:</strong> Focusing on small additions, not restrictions.</li>
+                    <li>🧠 <strong>Mindset:</strong> Moving from "dieting" to "balancing."</li>
+                </ul>
+                <button onclick="navigateTo('view-dashboard')">Back to Dashboard</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <a href="dashboard.html" class="button-style">Go to Dashboard</a>
+</body>
+</html>
